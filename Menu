@@ -1,0 +1,157 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.util.concurrent.TimeUnit;
+
+class Button{
+	
+	public static Color ligte_geel = new Color(255, 255, 180);
+	public static Color donker_blou = new Color (33, 66, 150);
+	public static boolean darkMode;
+	
+	private String name;	
+	private final double x;
+	private final double y;
+	private final double height;
+	private final double width;
+	private Color kleur;
+	
+	public Button(String nameIn, Color kleur, double xIn, double yIn, double widthIn, double heightIn) {
+		
+		darkMode = true;
+		
+		this.name = nameIn;
+		this.kleur = kleur;
+		this.x = xIn;
+		this.y = yIn;
+		this.width = widthIn;
+		this.height = heightIn;
+		
+		this.draw();		
+		
+		darkMode = false;
+	}
+		
+	public boolean isClicked() {
+		boolean ans = false;
+		
+		if (StdDraw.isMousePressed()) {
+		
+			if ((StdDraw.mouseX() >= this.x - this.width/2 && StdDraw.mouseX() <= (this.x + width/2)) && (StdDraw.mouseY() >= this.y - this.height/2 && StdDraw.mouseY() <= (this.y + height/2))) {
+				ans = true;
+			} else {
+				ans = false;
+			}		
+		}
+		
+		return ans;
+	}
+	
+	public void switchColor(Color kleur) {
+			
+		if (!darkMode) {
+		
+			this.kleur = Button.ligte_geel;
+		} else {
+			
+			this.kleur = Button.donker_blou;
+		}
+		
+		this.draw();
+    }
+	
+	public void switchName() {
+		
+		if (!darkMode) {
+			
+			this.name = "MODE: DARK";
+			StdDraw.picture(0.5, 0.5, "dark_sky.jpg", 1, 1);
+		} else {
+			
+			this.name = "MODE: LIGHT";
+			StdDraw.picture(0.5, 0.5, "light_sky.jpg", 1, 1);
+		}
+	}
+	
+	public void draw() {		
+		
+		StdDraw.setPenColor(this.kleur);
+		StdDraw.filledRectangle(this.x, this.y, this.width/2, this.height/2);
+		
+		StdDraw.setPenColor(StdDraw.BLACK);
+		StdDraw.rectangle(this.x, this.y, this.width/2, this.height/2);
+				
+		if (!darkMode) {
+			
+			StdDraw.setPenColor(StdDraw.BLACK);		
+		} else {
+			
+			StdDraw.setPenColor(StdDraw.WHITE);
+		}
+		
+		StdDraw.text(this.x, this.y, this.name);
+		StdDraw.show();
+	}
+	
+	public void switchMode() {
+		
+		
+		
+		if (!darkMode) {
+			
+			darkMode = true;
+		} else {
+			
+			darkMode = false;
+		}
+				
+	}
+
+}
+
+public class Menu{
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		//MISC//////////////////////////////
+		
+		StdDraw.setCanvasSize(600, 600);
+		StdDraw.enableDoubleBuffering();
+		StdDraw.picture(0.5, 0.5, "light_sky.jpg", 1, 1);
+		
+		Font font = new Font("Monospaced", Font.BOLD, 18);
+		StdDraw.setFont(font);
+		
+		boolean done = false;
+		Button.darkMode = false;
+		
+		////////////////////////////////////
+		
+		Button exit = new Button ("EXIT", Button.donker_blou, 0.5, 0.25, 0.2, 0.1);	
+		Button play = new Button("PLAY", Button.donker_blou, 0.5, 0.7, 0.2, 0.1);
+		Button change = new Button("MODE: LIGHT", Button.donker_blou, 0.5, 0.4, 0.25, 0.1);
+		
+		while(!done) {
+			
+			if (change.isClicked()) {
+				
+				change.switchName();
+				change.switchColor(Button.donker_blou);	
+				play.switchColor(Button.donker_blou);
+				exit.switchColor(Button.donker_blou);
+				
+				change.switchMode();
+				
+				TimeUnit.MILLISECONDS.sleep(120);
+			}
+			
+			if (exit.isClicked()) {
+				System.exit(1);
+			}
+			
+			if (play.isClicked()) {
+				//Game.main();
+			}	
+		}
+	}
+
+}
