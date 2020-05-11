@@ -1,30 +1,33 @@
-public class Ship{
-  private double x, y, halfW, halfH; //half width, half height
-  //constructor
-  public Ship(double x, double y, double halfW, double halfH){
-    this.x = x;
-    this.y = y;
-    this.halfW = halfW;
-    this.halfH = halfH;
+public class Ship extends GObject{
+  //Extended properties
+  private double theta;
+  private boolean fireReady;
+  //Constructor
+  public Ship(double x, double y, double radius){
+    super(x, y, radius);
+    this.theta = Math.PI/2;
+    this.fireReady = true;
   }
-  //setters
-  public void moveLeft(double dx){
-    this.x -= dx;
+  //API & Modifiers
+  public void setTheta(double theta){
+    this.theta = theta;
   }
-  public void moveRight(double dx){
-    this.x += dx;
+  public void rotate(double theta){
+    this.theta = this.theta + theta;
   }
-  //getters
-  public double getX(){
-    return this.x;
-  }
-  public double getY(){
-    return this.y;
+  public void setFireReady(boolean fireReady){
+    this.fireReady = fireReady;
   }
   public double getHW(){
-    return this.halfW;
+    return 1.5 * this.radius; //half width of ship for drawing
   }
   public double getHH(){
-    return this.halfH;
+    return this.radius / 2;   //half height of ship for drawing
+  }
+  public double getTheta(){
+    return this.theta;
+  }
+  public boolean getFireReady(){
+    return this.fireReady;
   }
 }

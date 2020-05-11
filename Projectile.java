@@ -1,37 +1,16 @@
-public class Projectile{
-  //properties
-  private double x, y, radius;
-  private boolean alive;
-
-  //methods
-  //constructor
+public class Projectile extends GObject{
+  //Constructor
   public Projectile(double x, double y, double radius){
-    this.alive = true;
-    this.x = x;
-    this.y = y;
-    this.radius = radius;
+    super(x, y, radius);
   }
-  //setters
-  public void moveVertical(double dy){
+  //API & Modifiers
+  public void shiftY(double dy){
     this.y += dy;
   }
-  public void moveHorisontal(double dx){
-    this.x += dx;
+  public void setY(double y){
+    this.y = y;
   }
-  //getters
-  public String display(){
-    return ("x: " +this.x+"\ny: "+this.y);
-  }
-  public double getY(){
-    return this.y;
-  }
-  public double getX(){
-    return this.x;
-  }
-  public double getRadius(){
-    return this.radius;
-  }
-  public boolean getAlive(){
-    return this.alive;
+  public void setX(double x){
+    this.x = x;
   }
 }
